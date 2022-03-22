@@ -5,10 +5,16 @@
     align-items: center;
     padding: 50px 20px;
     overflow: hidden;
+    position: relative;
+}
+.headerImage {
     background-color: lightgray;
     background: url(../../assets/images/header.jpg);
     background-size: cover;
-}
-.headerImage {
-    
+    position: absolute;
+    top: -60%;
+    bottom: -5%;
+    left: -5%;
+    right: -5%;
+    z-index: -1;
 }
