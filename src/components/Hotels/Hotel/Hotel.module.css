@@ -1,0 +1,11 @@
+.hotel {
+    border: 1px solid white;
+    background-color: rgb(212, 207, 207);
+}
+.card {
+    margin-bottom: 20px;
+}
+.title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}

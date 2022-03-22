@@ -1,0 +1,14 @@
+.header {
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    overflow: hidden;
+    background-color: lightgray;
+    background: url(../../assets/images/header.jpg);
+    background-size: cover;
+}
+.headerImage {
+    
+}
