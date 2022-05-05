@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  { useEffect, useState, useReducer, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -10,6 +10,8 @@ import Footer from './components/Footer/Footer';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
 import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
+import BestHotel from './components/Hotels/BestHotel/BestHotel';
+import InspiringQuote from './components/InspiringQuote/InspiringQuote';
 
 const defaultHotels = [
   {
@@ -31,16 +33,53 @@ const defaultHotels = [
 ];
 
 function App() {
-  const [hotels, setHotels] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [theme, setTheme] = useState('primary');
+  const reducer = (state, action) => {
+    switch(action.type){
+      case 'change-theme':
+        return {
+          ...state,
+          theme: state.theme === 'primary' ? 'warning' :  'primary'
+        }
+      case 'set-hotels':
+        return {
+          ...state,
+          hotels: action.hotels
+        }
+      case 'set-loading':
+        return {
+          ...state,
+          loading: action.loading
+        }
+      case 'login':
+        return {
+          ...state,
+          isAuthenticated: true
+        }
+      case 'logout':
+        return {
+          ...state,
+          isAuthenticated: false
+        }
+      default:
+        throw new Error('Nie ma akcji: ' + action.type)
+    }
+
+  }
+
+  const initialState = {
+    hotels: [],
+    loading: true,
+    isAuthenticated: true,
+    theme: 'warning'
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() =>
     {
       setTimeout(() => {
-        setHotels(defaultHotels);
-        setLoading(false);
+        dispatch({ type: 'set-hotels', hotels: defaultHotels});
+        dispatch({ type: 'set-loading', loading: false});
       }, 1000);
     }, []
   );
@@ -50,36 +89,57 @@ function App() {
       .filter(x => x.name
           .toLowerCase()
           .includes(term.toLowerCase()));
-    setHotels(newHotels);
+    dispatch({ type: 'set-hotels', hotels: newHotels});
       }
 
   const changeTheme = () =>  {
-    const newTheme = theme === 'primary' ? 'secondary' :  'primary';
-    setTheme(newTheme);
+    dispatch({
+      type: 'change-theme'
+    });
   }
+
+  const getBestHotel = useCallback((options) => {
+    if(state.hotels.length < options.minHotels){
+      return null;
+    }else {
+      return state.hotels.sort((a, b) => a.rating > b.rating ? -1 : 1)
+      [0];
+    }
+  }, [state.hotels]);
 
   const header = (
     <Header>
+            <InspiringQuote />
             <Searchbar onSearch={term => searchHandler(term)}/>
             <ThemeButton changeTheme={changeTheme} />
           </Header>
   )
+
+  const bestHotel =  getBestHotel({minHotels: 2}) ? <BestHotel getHotel={getBestHotel} /> : null;
+
+  const hotelsOffers = (
+    <>
+   { bestHotel }
+    <Hotels hotels={state.hotels} />
+    </>
+  )
+
   const content = (
-    loading 
-    ? <LoadingIcon theme={theme} />
-    : <Hotels hotels={hotels} />
+    state.loading 
+    ? <LoadingIcon theme={state.theme} />
+    : hotelsOffers
   )
 
   return (
     <AuthContext.Provider 
     value={
-      { isAuthenticated: isAuthenticated,
-        login: () => {setIsAuthenticated(true)} ,
-        logout: () => {setIsAuthenticated(false)}
+      { isAuthenticated: state.isAuthenticated,
+        login: () => {dispatch({ type: 'login'})} ,
+        logout: () => {dispatch({ type: 'logout'})}
       }
           }>
     <ThemeContext.Provider value = {{
-      color: theme,
+      color: state.theme,
       onChange: changeTheme}}>
       <Layout
         header={header}

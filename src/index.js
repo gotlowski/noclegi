@@ -4,9 +4,38 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { render } from '@testing-library/react';
+
+let state = null;
+
+function useState(defaultValue) {
+
+  const setValue = defaultValue => {
+    state[0] = defaultValue;
+  }
+
+  const currentState = [defaultValue, setValue];
+  state = currentState;
+
+  return currentState;
+}
+
+function TestHook() {
+  const [value, setValue] = useState('start');
+
+  return(
+    <>
+      <h1>Test hooka!</h1>
+      <input type="text" 
+        value={value} 
+        onChange={e => setValue(e.target.value)}></input>
+    </>
+  )
+}
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <TestHook /> */}
     <App />
   </React.StrictMode>,
   document.getElementById('root')
