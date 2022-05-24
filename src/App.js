@@ -12,7 +12,8 @@ import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
 import BestHotel from './components/Hotels/BestHotel/BestHotel';
 import InspiringQuote from './components/InspiringQuote/InspiringQuote';
-import useStateStorage from './hooks/useStateStorage';
+import LastHotel from './components/Hotels/LastHotel/LastHotel';
+import useStateStorage from './hooks/useStateStorage'
 
 const defaultHotels = [
   {
@@ -108,6 +109,8 @@ function App() {
     }
   }, [state.hotels]);
 
+  const [lastHotel, setLastHotel] = useStateStorage('last-hotel', null);
+
   const header = (
     <Header>
             <InspiringQuote />
@@ -118,13 +121,14 @@ function App() {
 
   const bestHotel =  getBestHotel({minHotels: 2}) ? <BestHotel getHotel={getBestHotel} /> : null;
 
-  const [storage, setStorage] = useStateStorage('klucz', 'wartość początkowa');
+  const openHotel = (hotel) => setLastHotel(hotel);
+  const removeLastHotel = () => setLastHotel(null);
 
   const hotelsOffers = (
     <>
-    <input type="text" value={storage} onChange={e=> setStorage(e.target.value)}/>
+    {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel} /> : null}
    { bestHotel }
-    <Hotels hotels={state.hotels} />
+    <Hotels onOpen={openHotel} hotels={state.hotels} />
     </>
   )
 
