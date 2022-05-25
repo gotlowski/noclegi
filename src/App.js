@@ -14,6 +14,7 @@ import BestHotel from './components/Hotels/BestHotel/BestHotel';
 import InspiringQuote from './components/InspiringQuote/InspiringQuote';
 import LastHotel from './components/Hotels/LastHotel/LastHotel';
 import useStateStorage from './hooks/useStateStorage'
+import useWebsiteTitle from './hooks/useWebsiteTitle';
 
 const defaultHotels = [
   {
@@ -35,6 +36,7 @@ const defaultHotels = [
 ];
 
 function App() {
+  useWebsiteTitle('Strona główna');
   const reducer = (state, action) => {
     switch(action.type){
       case 'change-theme':
