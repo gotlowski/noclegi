@@ -1,4 +1,5 @@
-import  { useEffect, useState, useReducer, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import  { useEffect, useReducer, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -15,6 +16,7 @@ import InspiringQuote from './components/InspiringQuote/InspiringQuote';
 import LastHotel from './components/Hotels/LastHotel/LastHotel';
 import useStateStorage from './hooks/useStateStorage'
 import useWebsiteTitle from './hooks/useWebsiteTitle';
+
 
 const defaultHotels = [
   {
@@ -126,39 +128,46 @@ function App() {
   const openHotel = (hotel) => setLastHotel(hotel);
   const removeLastHotel = () => setLastHotel(null);
 
-  const hotelsOffers = (
+  const hotelsList = (
     <>
     {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel} /> : null}
-   { bestHotel }
+    { bestHotel }
     <Hotels onOpen={openHotel} hotels={state.hotels} />
     </>
   )
 
-  const content = (
-    state.loading 
-    ? <LoadingIcon theme={state.theme} />
-    : hotelsOffers
+  const hotelsOffers = (
+    <>
+      <Routes>
+        <Route exact={true} path="/" element={hotelsList}/>
+        <Route path="/hotel/:id" element={<h1>To jest jakiś hotel</h1>} />
+      </Routes>
+    </>
   )
 
+  const content = (state.loading ? <LoadingIcon theme={state.theme} /> : hotelsOffers)
+
   return (
-    <AuthContext.Provider 
-    value={
-      { isAuthenticated: state.isAuthenticated,
-        login: () => {dispatch({ type: 'login'})} ,
-        logout: () => {dispatch({ type: 'logout'})}
-      }
-          }>
-    <ThemeContext.Provider value = {{
-      color: state.theme,
-      onChange: changeTheme}}>
-      <Layout
-        header={header}
-        menu={<Menu />}
-        content={content}
-        footer={<Footer />}
-      />
-    </ThemeContext.Provider>
-    </AuthContext.Provider>
+    <Router>
+      <AuthContext.Provider 
+      value={
+        { isAuthenticated: state.isAuthenticated,
+          login: () => {dispatch({ type: 'login'})} ,
+          logout: () => {dispatch({ type: 'logout'})}
+        }
+            }>
+      <ThemeContext.Provider value = {{
+        color: state.theme,
+        onChange: changeTheme}}>
+        <Layout
+          header={header}
+          menu={<Menu />}
+          content={content}
+          footer={<Footer />}
+        />
+      </ThemeContext.Provider>
+      </AuthContext.Provider>
+    </Router>
   );
 }
 
