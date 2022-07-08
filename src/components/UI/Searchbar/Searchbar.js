@@ -1,16 +1,21 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import ThemeContext from '../../../context/themeContext'; 
-
-function Searchbar(props) {
-    const search = () => {
-        props.onSearch(term);
-    }
+import { useNavigate as useHistory, useLocation, useParams } from 'react-router-dom';
+ 
+function Searchbar(props) {   
     const inputRef = useRef(null);
     const [term, setTerm] = useState('')
     const updateTerm = (e) => {
         setTerm(e.target.value);
+    
     }
-    const theme = useContext(ThemeContext)
+     const history = useHistory();
+    const theme = useContext(ThemeContext);
+    const search = () => {
+        console.log(history);
+          history(`/wyszukaj/${term}`);
+    }
+
 
     const focusInput = () => {
         inputRef.current.focus();
@@ -19,8 +24,6 @@ function Searchbar(props) {
     useEffect(() => {
         focusInput()
     }, []);
-
-    // 
 
     return (
         <div className="d-flex">

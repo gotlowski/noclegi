@@ -37,7 +37,7 @@ function Hotel(props) {
                                     </div>
                                     <div className='col'>
                                         <h4>Ocena {props.rating}</h4>
-                                        <Link to={`/hotel/${props.id}`}>
+                                        <Link to={`/hotele/${props.id}`}>
                                             Pokaż
                                         </Link>
                                         {/* <a href='/hotel/id' onClick={openHotel} className={`btn btn-${theme.color} mt-2 px-5`}>Pokaż</a> */}

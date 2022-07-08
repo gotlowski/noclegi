@@ -8,13 +8,16 @@
  display: inline-block;
  margin-right: 15px;
 }
-.menuItem a{
+.menuItem a {
     color: rgb(83, 83, 83);
 }
 .menuContainer {
     border: 1px solid lightgray;
     margin: 10px 0;
     background-color: lightgray;
+}
+.menuItemInactive {
+    text-decoration: none;
 }
 .a {
     text-decoration: none;
