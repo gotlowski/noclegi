@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import  { useReducer } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
@@ -17,6 +17,10 @@ import Hotel from './pages/Hotel/Hotel';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
+import MyHotels from "./pages/Profile/MyHotels";
+import ProfileDetails from "./pages/Profile/ProfileDetail";
+import Notfound from './pages/404/404';
+import Login from './pages/Auth/Login/Login';
 
 const defaultHotels = [
   {
@@ -68,7 +72,13 @@ function App() {
         <Route exact={true} path="/" element={<Home />}/>
         <Route path="/hotele/:id" element={<Hotel />} />
         <Route path="/wyszukaj/:term" element={<Search />} />
-        <Route path="/profil" element={<Profile />} />
+        <Route path="/wyszukaj/" element={<Search />} />
+        <Route path="/zaloguj/" element={ <Login />} />
+        <Route path="profil" element={state.isAuthenticated ? <Profile /> : <Navigate to="/zaloguj" />}>
+          <Route path="edytuj" element={<ProfileDetails />}/>
+          <Route path="hotele" element={<MyHotels />} />
+        </Route>
+        <Route path="*" element={<Notfound />} />
       </Routes>
       {state.loading ? <LoadingIcon /> : null}
     </>
