@@ -1,4 +1,4 @@
-// import useStateStorage from '././hooks/useStateStorage';
+import { Link } from 'react-router-dom'
 
 function LastHotel(props) {
     return (
@@ -13,7 +13,7 @@ function LastHotel(props) {
                 </dev>
             </dev>
             <dev style={{width: '100px'}} className="ml-auto d-flex justify-content-between">
-                <a href="#" className="btn btn-sm btn-dark">TAK!</a>
+                <Link href="#" className="btn btn-sm btn-dark">TAK!</Link>
                 <button onClick={props.onRemove} className="btn btn-sm btn-dark">Nie</button>
             </dev>
         </div>

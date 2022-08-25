@@ -1,5 +1,5 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import  { useReducer } from 'react';
+import  { useReducer, lazy, Suspense } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -16,11 +16,12 @@ import Home from './pages/Home/Home';
 import Hotel from './pages/Hotel/Hotel';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import Search from './pages/Search/Search';
-import Profile from './pages/Profile/Profile';
 import MyHotels from "./pages/Profile/MyHotels";
 import ProfileDetails from "./pages/Profile/ProfileDetail";
 import Notfound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
+import ErrorBoundry from './hoc/ErrorBoundry';
+const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 const defaultHotels = [
   {
@@ -67,7 +68,7 @@ function App() {
   )
 
   const content = (
-    <>
+    <Suspense fallback={<p>Ładowanie....</p>}>
       <Routes>
         <Route exact={true} path="/" element={<Home />}/>
         <Route path="/hotele/:id" element={<Hotel />} />
@@ -81,7 +82,7 @@ function App() {
         <Route path="*" element={<Notfound />} />
       </Routes>
       {state.loading ? <LoadingIcon /> : null}
-    </>
+    </Suspense>
   )
 
   return (
@@ -100,12 +101,14 @@ function App() {
           <ReducerContext.Provider value={{state: state,
             dispatch: dispatch
           }}>
-            <Layout
-              header={header}
-              menu={<Menu />}
-              content={content}
-              footer={<Footer />}
-            />
+            <ErrorBoundry>
+              <Layout
+                header={header}
+                menu={<Menu />}
+                content={content}
+                footer={<Footer />}
+              />
+            </ErrorBoundry>
           </ReducerContext.Provider>
         </ThemeContext.Provider>
       </AuthContext.Provider>
