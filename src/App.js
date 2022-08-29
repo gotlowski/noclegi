@@ -16,11 +16,12 @@ import Home from './pages/Home/Home';
 import Hotel from './pages/Hotel/Hotel';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import Search from './pages/Search/Search';
-import MyHotels from "./pages/Profile/MyHotels";
+import MyHotels from "./pages/Profile/MyHotels/MyHotels";
 import ProfileDetails from "./pages/Profile/ProfileDetail";
 import Notfound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
 import ErrorBoundry from './hoc/ErrorBoundry';
+import AddHotel from './pages/Profile/MyHotels/AddHotel/AddHotel';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 const defaultHotels = [
@@ -78,6 +79,7 @@ function App() {
         <Route path="profil" element={state.isAuthenticated ? <Profile /> : <Navigate to="/zaloguj" />}>
           <Route path="edytuj" element={<ProfileDetails />}/>
           <Route path="hotele" element={<MyHotels />} />
+          <Route path="hotele/dodaj" element={<AddHotel />} />
         </Route>
         <Route path="*" element={<Notfound />} />
       </Routes>
