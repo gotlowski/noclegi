@@ -24,7 +24,7 @@
                 value={props.value}
                 onChange={e => props.onChange(e.target.value)}
             />
-            <div className="invalid-feedback">props.error</div>
+            <div className="invalid-feedback">{props.error}</div>
         </div>
     )
  }

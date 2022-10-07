@@ -14,6 +14,8 @@ function Menu() {
         e.preventDefault();
         setAuth(false);
     };
+    const register = (e) => {
+    };
     return (
         <div className= {`${styles.menuContainer} breadcrumb`}>
             <ul className={styles.menu}>
@@ -37,9 +39,20 @@ function Menu() {
                         </li>
                     </> 
                     ) : (     
+                    <>
                     <li className={styles.menuItem}>
-                        <a className={styles.a} href="#" onClick={login}>Zaloguj</a>
-                    </li>)
+                        <NavLink 
+                            className={styles.a} href="#"
+                            to="/zaloguj">Zaloguj
+                        </NavLink>
+                    </li>
+                    <li className={styles.menuItem}>
+                        <NavLink 
+                            className={styles.a} href="#" onClick={register} 
+                            to="/rejestruj">Zarejestruj
+                        </NavLink>
+                    </li>
+                    </>)
                 }
             </ul>
         </div>

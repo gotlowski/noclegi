@@ -22,6 +22,6 @@ export const reducer = (state, action) => {
   }
 
   export const initialState = {
-    isAuthenticated: true,
+    isAuthenticated: JSON.parse(window.localStorage.getItem('token-data')) ? true : false,
     theme: 'warning'
   }

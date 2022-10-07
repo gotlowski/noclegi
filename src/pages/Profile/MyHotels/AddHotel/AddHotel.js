@@ -1,9 +1,15 @@
 import { useRef, useState } from "react";
 import Input from "../../../../components/Input/Input";
+import { validate } from "../../../../helpers/validations";
 
 export default function AddHotel(props){
     const [form, setForm]= useState({
-        name: '',
+        name: {
+            value: '',
+            showError: false,
+            error: '',
+            rules: ['required', { rule: 'min', length: 4 }]
+        },
         description: '',
         city: '',
         rooms: '3',
@@ -17,6 +23,18 @@ export default function AddHotel(props){
         console.log(form);
     }
 
+    const changeHandler = (val, fieldName) => {
+        const error = validate(form[fieldName].rules, val);
+        setForm({
+            ...form, 
+            [fieldName]: {
+                ...form[fieldName], 
+                value: val,
+                showError: true,
+                error: error
+    }});
+    }
+
     return (
         <div className="card">
             <div className="card-header">Nowy hotel</div>
@@ -24,10 +42,11 @@ export default function AddHotel(props){
                 <form onSubmit={submit}>
                     <Input
                         label = "Nazwa"
-                        value = {form.name}
-                        onChange = {value => setForm({...form, name: value})}
+                        value = {form.name.value}
+                        onChange = {value => changeHandler(value, 'name')}
                         isValid = {true}
-                        showError = {false} />
+                        showError = {form.name.showError}
+                        error = {form.name.error} />
                     <Input
                         label = "Opis"
                         value = {form.description}

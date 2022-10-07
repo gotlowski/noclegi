@@ -1,5 +1,5 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import  { useReducer, lazy, Suspense } from 'react';
+import  { useReducer, lazy, Suspense, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -22,6 +22,7 @@ import Notfound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
 import ErrorBoundry from './hoc/ErrorBoundry';
 import AddHotel from './pages/Profile/MyHotels/AddHotel/AddHotel';
+import Register from './pages/Auth/Register/Register';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 const defaultHotels = [
@@ -76,6 +77,7 @@ function App() {
         <Route path="/wyszukaj/:term" element={<Search />} />
         <Route path="/wyszukaj/" element={<Search />} />
         <Route path="/zaloguj/" element={ <Login />} />
+        <Route path="/rejestruj/" element={ <Register />} />
         <Route path="profil" element={state.isAuthenticated ? <Profile /> : <Navigate to="/zaloguj" />}>
           <Route path="edytuj" element={<ProfileDetails />}/>
           <Route path="hotele" element={<MyHotels />} />

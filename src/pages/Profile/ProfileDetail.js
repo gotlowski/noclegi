@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
+import { validateEmail } from "../../helpers/validations";
 
 export default function ProfileDetails(props){
     const [email, setEmail] = useState('');
@@ -26,12 +27,6 @@ export default function ProfileDetails(props){
             setErrors({...errors, email: 'Niepoprawny email'});
         }
     }, [email])
-
-    const validateEmail = (email) => {
-        return email.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-      };
 
     return (
         <div>
