@@ -1,8 +1,12 @@
 import { useRef, useState } from "react";
 import Input from "../../../../components/Input/Input";
 import { validate } from "../../../../helpers/validations";
+import axios from "../../../../axios";
+import { useNavigate } from "react-router";
+import useAuth from "../../../../hooks/useAuth";
 
 export default function AddHotel(props){
+    const [auth] = useAuth()
     const [form, setForm]= useState({
         name: {
             value: '',
@@ -10,17 +14,52 @@ export default function AddHotel(props){
             error: '',
             rules: ['required', { rule: 'min', length: 4 }]
         },
-        description: '',
-        city: '',
-        rooms: '3',
+        description: {
+            value: '',
+            showError: false,
+            error: '',
+            rules: ['required', { rule: 'min', length: 4 }]
+        },
+        city: {
+            value: '',
+            showError: false,
+            error: '',
+            rules: ['required']
+        },
+        rooms: {
+            value: 2,
+            showError: false,
+            error: '',
+            rules: ['required']
+        },
         features: ['tv'],
         image: null,
-        status: '1'
+        status: {
+            value: '1',
+            showError: false,
+            error: '',
+            rules: ['required']
+        }
     });
+    const navigate = useNavigate();
 
-    const submit = e => {
+    const submit = async e => {
         e.preventDefault();
-        console.log(form);
+        
+        try{
+            const res = await axios.post('/hotels.json', {
+                name: form.name.value,
+                description: form.description.value,
+                city: form.city.value,
+                rooms: form.rooms.value,
+                features: form.features,
+                status: form.status.value,
+                user_id: auth.userId
+            });
+         navigate('/');
+        }catch(ex){
+            console.log(ex.response);
+        }
     }
 
     const changeHandler = (val, fieldName) => {
@@ -49,20 +88,22 @@ export default function AddHotel(props){
                         error = {form.name.error} />
                     <Input
                         label = "Opis"
-                        value = {form.description}
-                        onChange = {value => setForm({...form, description: value})}
+                        value = {form.description.value}
+                        onChange = {value => changeHandler(value, 'description')}
                         isValid = {true}
-                        showError = {false} />
+                        showError = {form.description.showError}
+                        error = {form.description.error} />
                     <Input
                         label = "Miejscowość"
-                        value = {form.city}
-                        onChange = {value => setForm({...form, city: value})}
+                        value = {form.city.value}
+                        onChange = {value => changeHandler(value, 'city')}
                         isValid = {true}
-                        showError = {false} />
+                        showError = {form.city.showError}
+                        error = {form.city.error} />
                     <Input
                         label = "Ilość pokoi"
-                        value = {form.rooms}
-                        onChange = {value => setForm({...form, rooms: value})}
+                        value = {form.rooms.value}
+                        onChange = {value => changeHandler(value, 'rooms')}
                         isValid = {true}
                         showError = {false} 
                         options={[
@@ -93,7 +134,7 @@ export default function AddHotel(props){
                         type = "file"/>
                     <Input
                         label = "Status"
-                        value = {form.status}
+                        value = {form.status.value}
                         onChange = {value => setForm({...form, status: value})}
                         error = ""
                         showError = {false} 

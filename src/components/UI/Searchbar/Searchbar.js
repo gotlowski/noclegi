@@ -12,23 +12,12 @@ function Searchbar(props) {
      const history = useHistory();
     const theme = useContext(ThemeContext);
     const search = () => {
-        console.log(history);
           history(`/wyszukaj/${term}`);
     }
-
-
-    const focusInput = () => {
-        inputRef.current.focus();
-    }
-
-    useEffect(() => {
-        focusInput()
-    }, []);
 
     return (
         <div className="d-flex">
             <input 
-                ref= {inputRef}
                 value={term}
                 onChange={updateTerm}
                 onKeyDown={e=> console.log(e.key === 'Enter' && search())}

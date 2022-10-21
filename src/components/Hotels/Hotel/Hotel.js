@@ -36,7 +36,7 @@ function Hotel(props) {
                                         <span>{props.city}</span>
                                     </div>
                                     <div className='col'>
-                                        <h4>Ocena {props.rating}</h4>
+                                        <h4>Ocena: {props.rating ?? 0}</h4>
                                         <Link to={`/hotele/${props.id}`}>
                                             Pokaż
                                         </Link>
@@ -49,7 +49,7 @@ function Hotel(props) {
                         </div>
                         <div>
                             <p>{props.description} </p>
-                            <p>Dostępność: {auth ?  "4 pokoje" : "widoczne dla zalogowanych" }
+                            <p>Dostępność: {auth ?  `${props.rooms} pokoje` : "widoczne dla zalogowanych" }
                             </p>
                         </div>
                     </div>

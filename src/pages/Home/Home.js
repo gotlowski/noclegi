@@ -5,25 +5,7 @@ import BestHotel from '../../components/Hotels/BestHotel/BestHotel';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle';
 import  { useEffect, useCallback, useState } from 'react';
 import LoadingIcon from  '../../components/UI/LoadingIcon/LoadingIcon'
-
-const defaultHotels = [
-    {
-      id: 1,
-      name: 'Pod akacjami',
-      city: 'Warszawa',
-      rating: 8.3,
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat id lorem vitae accumsan.',
-      image: ''
-    },
-    {
-      id: 2,
-      name: 'Dębowy',
-      city: 'Lublin',
-      rating: 8.8,
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat id lorem vitae accumsan.',
-      image: ''
-    }
-  ];
+import axios from '../../axios';
 
 export default function Home(props) {
     useWebsiteTitle('Strona główna');
@@ -32,14 +14,24 @@ export default function Home(props) {
     const [loading, setLoading] = useState(true);
     const [hotels, setHotels] = useState([]);
   
-    useEffect(() =>
-        {
-        setTimeout(() => {
-            setHotels(defaultHotels);
-            setLoading(false);
-        }, 1000);
-        }, []
-    );
+    const fetchHotels = async () => {
+      try{
+          const res = await axios.get('/hotels.json')
+
+          const newHotels = [];
+          for(const key in res.data){
+              newHotels.push({...res.data[key], id: key});
+          }
+          setHotels(newHotels.filter(hotel => hotel.status === '1'));
+          setLoading(false);
+      }catch(ex){
+          console.log(ex);
+      }
+  }
+
+  useEffect(() => {
+       fetchHotels();
+  }, []);
 
     const openHotel = (hotel) => setLastHotel(hotel);
     const removeLastHotel = () => setLastHotel(null);

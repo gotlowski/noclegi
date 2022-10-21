@@ -50,7 +50,7 @@
                     class="custom-control-input"
                     id={option.value}
                     value={option.value}
-                    onChange={toggleFeatures}
+                     onChange={toggleFeatures}
                     checked={props.value.find(x => x === option.value)}
                 />
                 <label class="custom-control-label" htmlFor={option.value}>{option.label}</label>

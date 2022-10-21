@@ -8,12 +8,12 @@ export const reducer = (state, action) => {
       case 'login':
         return {
           ...state,
-          isAuthenticated: true
+          user: action.user
         }
       case 'logout':
         return {
           ...state,
-          isAuthenticated: false
+          user: null
         }
       default:
         throw new Error('Nie ma akcji: ' + action.type)
@@ -22,6 +22,6 @@ export const reducer = (state, action) => {
   }
 
   export const initialState = {
-    isAuthenticated: JSON.parse(window.localStorage.getItem('token-data')) ? true : false,
+    user: JSON.parse(window.localStorage.getItem('token-data')) ?? null,
     theme: 'warning'
   }

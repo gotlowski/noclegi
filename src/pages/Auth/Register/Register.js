@@ -40,7 +40,7 @@ export default function Register(props) {
                 returnSecureToken: true
             });
             console.log(res);
-            setAuth(true, {
+            setAuth({
                 email: res.data.email,
                 token: res.data.idToken,
                 userId: res.data.localId
