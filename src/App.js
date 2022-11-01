@@ -23,6 +23,7 @@ import Login from './pages/Auth/Login/Login';
 import ErrorBoundry from './hoc/ErrorBoundry';
 import AddHotel from './pages/Profile/MyHotels/AddHotel/AddHotel';
 import Register from './pages/Auth/Register/Register';
+import EditHotel from './pages/Profile/MyHotels/EditHotel/EditHotel';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 const defaultHotels = [
@@ -82,6 +83,7 @@ function App() {
           <Route path="edytuj" element={<ProfileDetails />}/>
           <Route path="hotele" element={<MyHotels />} />
           <Route path="hotele/dodaj" element={<AddHotel />} />
+          <Route path="hotele/edytuj:id" element={<EditHotel />} />
         </Route>
         <Route path="*" element={<Notfound />} />
       </Routes>

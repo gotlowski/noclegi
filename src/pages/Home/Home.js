@@ -6,6 +6,7 @@ import useWebsiteTitle from '../../hooks/useWebsiteTitle';
 import  { useEffect, useCallback, useState } from 'react';
 import LoadingIcon from  '../../components/UI/LoadingIcon/LoadingIcon'
 import axios from '../../axios';
+import useAuth from '../../hooks/useAuth';
 
 export default function Home(props) {
     useWebsiteTitle('Strona główna');
@@ -13,10 +14,11 @@ export default function Home(props) {
 
     const [loading, setLoading] = useState(true);
     const [hotels, setHotels] = useState([]);
+    const [auth] = useAuth();
   
     const fetchHotels = async () => {
       try{
-          const res = await axios.get('/hotels.json')
+          const res = await axios.get(`/hotels.json`)
 
           const newHotels = [];
           for(const key in res.data){

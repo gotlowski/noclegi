@@ -1,11 +1,12 @@
 import axios from "../../../axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 export default function MyHotels(props){
     const [hotels, setHotels] = useState([]);
     const [auth] = useAuth();
+    const navigate = useNavigate();
 
     const fetchHotels = async () => {
         try{
@@ -21,9 +22,25 @@ export default function MyHotels(props){
         }
     }
 
+    const deleteHotel = async (id) => {
+        try{
+            await axios.delete(`/hotels/${id}.json`);
+
+            setHotels(hotels.filter(hotel => hotel.id !== id));
+        }catch(ex){
+            console.log(ex);
+        }
+    }
+
+    const editHotel = id => {
+        navigate(`/profil/hotele/edytuj${id}`);
+    }
+
     useEffect(() => {
          fetchHotels();
     }, []);
+
+    
 
     return (
         <div>
@@ -31,6 +48,7 @@ export default function MyHotels(props){
 <table className="table">
     <thead>
         <th>Nazwa</th>
+        <th>Status</th>
         <th>Opcja</th>
     </thead>
     <tbody>
@@ -38,8 +56,14 @@ export default function MyHotels(props){
              <tr>
              <td>{hotel.name}</td>
              <td>
-                 <button className="btn btn-warning">Edytuj</button>
-                 <button className="ml2 btn btn-danger">Usuń</button>
+                {hotel.status == 1
+                    ? <span className="badge bg-success">aktywny</span>
+                    : <span className="badge bg-secondary">ukryty</span>
+                }
+             </td>
+             <td>
+                 <button onClick={() => editHotel(hotel.id)} className="btn btn-warning">Edytuj</button>
+                 <button onClick={() => deleteHotel(hotel.id)} className="ml2 btn btn-danger">Usuń</button>
              </td>
          </tr>
        ))}
