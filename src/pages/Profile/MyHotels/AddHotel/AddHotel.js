@@ -9,7 +9,7 @@ export default function AddHotel(props){
 
     const submit = async form => {        
         try{
-            await axios.post('/hotels.json', form);
+            await axios.post(`/hotels.json?auth=${auth.token}`, form);
          navigate('/');
         }catch(ex){
             console.log(ex.response);

@@ -83,10 +83,7 @@ const HotelForm = props => {
         for (const key in props.hotel) {
             if(newForm[key]){
                 newForm[key].value = props.hotel[key];
-            }
-            console.log(props.hotel[key]);
-            console.log(key);
-             
+            }             
         }
         setForm(newForm);
     }, [props.hotel]);
@@ -131,7 +128,7 @@ const HotelForm = props => {
             <Input
                 label="Udogodnienia"
                 value={form.features.value}
-                onChange={value => setForm({ ...form, features: value })}
+                onChange={value => changeHandler(value, 'features') }
                 error=""
                 showError={false}
                 options={[
@@ -150,12 +147,12 @@ const HotelForm = props => {
             <Input
                 label="Status"
                 value={form.status.value}
-                onChange={value => setForm({ ...form, status: value })}
+                onChange={value => changeHandler(value, 'status') }
                 error=""
                 showError={false}
                 options={[
-                    { value: '1', label: 'Aktywny' },
-                    { value: '0', label: 'Ukryty' }
+                    { value: 1, label: 'Aktywny' },
+                    { value: 0, label: 'Ukryty' }
                 ]}
                 type="radio" />
         </form>

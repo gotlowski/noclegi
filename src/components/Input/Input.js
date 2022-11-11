@@ -33,11 +33,13 @@
     const toggleFeatures = e => {
         if(e.target.checked){
             const newFeatures = [...props.value, e.target.value]
-             props.onChange(newFeatures);
+            props.onChange(newFeatures);
+
         }else{
             const newFeatures = props.value.filter(x => x !== e.target.value);
             props.onChange(newFeatures);
         }
+        
     }
     return (
         <>
@@ -50,7 +52,7 @@
                     class="custom-control-input"
                     id={option.value}
                     value={option.value}
-                     onChange={toggleFeatures}
+                    onChange={toggleFeatures}
                     checked={props.value.find(x => x === option.value)}
                 />
                 <label class="custom-control-label" htmlFor={option.value}>{option.label}</label>

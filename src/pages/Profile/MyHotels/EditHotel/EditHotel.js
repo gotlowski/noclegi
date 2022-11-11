@@ -9,10 +9,11 @@ export default function EditHotel(props){
     const { id } = useParams();
     const navigate = useNavigate();
     const [hotel, setHotel] = useState(null);
+    const [auth] = useAuth();
 
     const submit = async form => {        
         try{
-            const res = await axios.put(`/hotels/${id}.json`, form);
+            const res = await axios.put(`/hotels/${id}.json?auth=${auth.token}`, form);
             navigate('/profil/hotele');
         }catch(ex){
             console.log(ex.response);
@@ -22,9 +23,7 @@ export default function EditHotel(props){
     const fetchHotel = async () => {
         try{
             const res = await axios.get(`/hotels/${id}.json`);
-            console.log(res.data);
             setHotel(res.data);
-
         }catch(ex){
             console.log(ex.response);
         }
