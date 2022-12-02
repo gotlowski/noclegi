@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://noclegi-bbcdd-default-rtdb.europe-west1.firebasedatabase.app'
+    baseURL: process.env.REACT_APP_DATABASE
 });
 
 export default instance;
