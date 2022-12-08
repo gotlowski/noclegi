@@ -2,6 +2,7 @@ import axios from "../../../../axios";
 import { useNavigate } from "react-router";
 import useAuth from "../../../../hooks/useAuth";
 import HotelForm from "../HotelForm";
+import React, { Component }  from 'react';
 
 export default function AddHotel(props){
     const [auth] = useAuth()

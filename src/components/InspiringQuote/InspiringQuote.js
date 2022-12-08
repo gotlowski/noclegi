@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 
 const styles = {
     position: 'absolute',

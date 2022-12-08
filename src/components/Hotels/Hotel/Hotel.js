@@ -36,11 +36,10 @@ function Hotel(props) {
                                         <span>{props.city}</span>
                                     </div>
                                     <div className='col'>
-                                        <h4>Ocena: {props.rating ?? 0}</h4>
+                                        <h4>Ocena: {props.rating ? props.rating : 0}</h4>
                                         <Link to={`/hotele/${props.id}`}>
                                             Pokaż
                                         </Link>
-                                        {/* <a href='/hotel/id' onClick={openHotel} className={`btn btn-${theme.color} mt-2 px-5`}>Pokaż</a> */}
                                     </div>
                                 </div>
                             

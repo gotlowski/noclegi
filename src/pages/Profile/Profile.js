@@ -1,4 +1,5 @@
-import { Redirect, Outlet, NavLink } from 'react-router-dom'
+import { Redirect, Outlet, NavLink } from 'react-router-dom';
+import React from "react";
 
 export default function Profile(props) {
     return (

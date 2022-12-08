@@ -1,5 +1,5 @@
 import axios from "../../axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import useWebsiteTitle from "../../hooks/useWebsiteTitle";
@@ -62,7 +62,7 @@ export default function Hotel(props) {
                             )}
                         </ul>
                     </p>
-                    <p><h4>Ocena: {hotel.rating ?? 'brak ocen'} </h4></p>
+                    <p><h4>Ocena: {hotel.rating ? hotel.rating : 'brak ocen'} </h4></p>
                 </div>
                 <div className="card-footer">
                     {auth ? (

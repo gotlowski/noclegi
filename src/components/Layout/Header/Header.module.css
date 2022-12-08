@@ -9,7 +9,7 @@
 }
 .headerImage {
     background-color: lightgray;
-    background: url(../../assets/images/header.jpg);
+    background: url(../../../assets/images/header.jpg);
     background-size: cover;
     position: absolute;
     top: -60%;

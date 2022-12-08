@@ -3,7 +3,7 @@ import Hotels from '../../components/Hotels/Hotels';
 import useStateStorage from '../../hooks/useStateStorage'
 import BestHotel from '../../components/Hotels/BestHotel/BestHotel';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle';
-import  { useEffect, useCallback, useState } from 'react';
+import  React, { useEffect, useCallback, useState } from 'react';
 import LoadingIcon from  '../../components/UI/LoadingIcon/LoadingIcon'
 import axios from '../../axios';
 import useAuth from '../../hooks/useAuth';

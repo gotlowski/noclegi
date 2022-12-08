@@ -1,3 +1,4 @@
+import React from "react";
 import withClass from "../../hoc/withClass";
 
 function Layout(props) {
